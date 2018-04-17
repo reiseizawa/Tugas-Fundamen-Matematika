@@ -1,0 +1,220 @@
+package kalkulatormatriks;
+
+/**
+ *
+ * @author Axel Christiant & Teguh Dwiputra
+ */
+import java.util.Scanner;
+
+public class KalkulatorMatriks {
+
+    //Deklarasi
+    int[][] matriks1, matriks2, hasil;
+    int baris1, kolom1, baris2, kolom2;
+    //Menghidupkan Scanner
+    Scanner scan = new Scanner(System.in);
+
+    public KalkulatorMatriks() {
+
+    }
+
+    //Method untuk mendisplay / memperlihatkan menu
+    public void Displaymenu() {
+        System.out.println("----Menu Kalkulator Matrix-----\n"
+                + "1. Penjumlahan\n"
+                + "2. Pengurangan\n"
+                + "3. Perkalian\n"
+                + "4. Perkalian Skalar\n"
+                + "5. Transpose\n"
+                + "0. Keluar");
+    }
+
+    //Setter matriks 1
+    public void setMatriks1(int baris1, int kolom1) {
+        this.baris1 = baris1;
+        this.kolom1 = kolom1;
+        matriks1 = new int[baris1][kolom1];
+        for (int i = 0; i < baris1; i++) {
+            for (int j = 0; j < kolom1; j++) {
+                System.out.println("Masukkan matriks 1 baris ke " + (i + 1) + " kolom ke " + (j + 1) + " : ");
+                matriks1[i][j] = scan.nextInt();
+            }
+        }
+
+    }
+
+    //Setter matriks 2
+    public void setMatriks2(int baris2, int kolom2) {
+        this.kolom2 = kolom2;
+        this.baris2 = baris2;
+        matriks2 = new int[baris2][kolom2];
+        for (int i = 0; i < baris2; i++) {
+            for (int j = 0; j < kolom2; j++) {
+                System.out.println("Masukkan matriks 2 baris ke " + (i + 1) + " kolom ke " + (j + 1) + " : ");
+                matriks2[i][j] = scan.nextInt();
+            }
+        }
+    }
+
+    //Untuk mendisplay prompt menu
+    public int prompt() {
+        System.out.print("Pilihan nomer : ");
+        return scan.nextInt();
+    }
+
+    //Method untuk menjumlahkan matriks 1 dan 2
+    public void penjumlahan() {
+
+        hasil = new int[baris1][kolom1];
+        for (int i = 0; i < baris1; i++) {
+            for (int j = 0; j < kolom1; j++) {
+                hasil[i][j] = matriks1[i][j] + matriks2[i][j];
+            }
+        }
+    }
+
+    //Method untuk pengurangan matriks 1 dan 2
+    public void pengurangan() {
+        hasil = new int[baris1][kolom1];
+        for (int i = 0; i < baris1; i++) {
+            for (int j = 0; j < kolom1; j++) {
+                hasil[i][j] = matriks1[i][j] - matriks2[i][j];
+            }
+        }
+    }
+
+    //Method untuk perkalian matriks 1 dan 2
+    public void perkalian() {
+        if (kolom1 == baris2) {
+            hasil = new int[baris1][kolom2];
+            for (int i = 0; i < baris1; i++) {
+                for (int j = 0; j < kolom1; j++) {
+                    int a = 0;
+                    for (int k = 0; k < baris1; k++) {
+                        a = a + (matriks1[i][k] * matriks2[k][j]);
+                    }
+                    hasil[i][j] = a;
+                }
+            }
+        } else {
+            System.out.println("(ERROR)Kolom pada matriks 1 harus sama dengan baris pada matriks 2");
+            Displaymenu();
+        }
+    }
+
+    //Method untuk menunjukkan hasil
+    public void displayHasil() {
+        System.out.println();
+        System.out.println("hasil : ");
+        for (int i = 0; i < hasil.length; i++) {
+            for (int j = 0; j < hasil.length; j++) {
+                System.out.print(hasil[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    //Setter untuk menentukan mau berapa baris dan berapa kolom pada matriks 1
+    public void setBrsklm1() {
+        System.out.print("Masukkan baris pada matriks 1 : ");
+        baris1 = scan.nextInt();
+        System.out.print("Masukkan kolom pada matriks 1 : ");
+        kolom1 = scan.nextInt();
+        setMatriks1(baris1, kolom1);
+    }
+
+    //Setter untuk menentukan mau berapa baris dan kolom pada matriks 2
+    public void setBrsklm2() {
+        System.out.print("Masukkan baris pada matriks 2 : ");
+        baris2 = scan.nextInt();
+        System.out.print("Masukkan kolom pada matriks 2 : ");
+        kolom2 = scan.nextInt();
+        setMatriks2(baris2, kolom2);
+    }
+
+    //Method untuk perkalian skalar
+    public void perkalianSkalar() {
+        int k;
+        System.out.print("Masukkan konstanta : ");
+        k = scan.nextInt();
+        hasil = new int[baris1][kolom1];
+        for (int i = 0; i < baris1; i++) {
+            for (int j = 0; j < kolom1; j++) {
+                hasil[i][j] = matriks1[i][j] * k;
+            }
+        }
+    }
+
+    //Method untuk mentransposkan matriks
+    public void Transpose() {
+
+        hasil = new int[kolom1][baris1];
+        for (int i = 0; i < baris1; i++) {
+            for (int j = 0; j < kolom1; j++) {
+                hasil[j][i] = matriks1[i][j];
+            }
+        }
+    }
+
+    //Method untuk menentukan output menu
+    public void process(int p) {
+
+        switch (p) {
+            case 1:
+                setBrsklm1();
+                setBrsklm2();
+                penjumlahan();
+                displayHasil();
+                break;
+            case 2:
+                setBrsklm1();
+                setBrsklm2();
+                pengurangan();
+                displayHasil();
+                break;
+            case 3:
+                setBrsklm1();
+                setBrsklm2();
+                perkalian();
+                displayHasil();
+                break;
+            case 4:
+                setBrsklm1();
+                perkalianSkalar();
+                displayHasil();
+                break;
+            case 5:
+                setBrsklm1();
+                Transpose();
+                displayHasil();
+                break;
+            default:
+                System.out.println("NOMER SALAH");
+
+        }
+
+    }
+
+    //Method untuk memainkan program
+    public void play() {
+        int x;
+        do {
+
+            Displaymenu();
+            x = prompt();
+            if (x != 0) {
+                process(x);
+            }
+
+        } while (x != 0);
+        System.out.println("TERIMA KASIH");
+    }
+
+    //Main
+    public static void main(String[] args) {
+        KalkulatorMatriks a = new KalkulatorMatriks();
+        a.play();
+    }
+
+}
